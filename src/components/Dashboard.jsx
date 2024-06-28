@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import Storagehandler from "../helper/Storagehandler";
 
 const Dashboard = () => {
-    const location = useLocation();
-    const { email } = location.state || {}; // Destructuring email from location.state, providing default empty object
+
+    // const location = useLocation();
+    // const { email } = location.state || {}; // Destructuring email from location.state, providing default empty object
+
+    const [email,setEmail] = useState();
+    const emaildata = Storagehandler.getLocalStorage();
+
+    useEffect(()=>{
+        setEmail(emaildata);
+    },[])
 
     return (
         <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>

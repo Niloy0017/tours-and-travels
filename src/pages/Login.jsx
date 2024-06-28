@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Storagehandler from "../helper/Storagehandler";
 
 const Login = ({ formChange }) => {
     const [email, setEmail] = useState('');
@@ -24,6 +25,8 @@ const Login = ({ formChange }) => {
             console.log("email : ", email, "password : ", password);
 
             navigate('/dashboard', { state: { email } });
+
+            Storagehandler.setLocalStorage(email);
 
 
             // setEmail('');
