@@ -41,7 +41,6 @@ class Register extends Component {
     render() {
         const { firstname, lastname, email, phone, submitted } = this.state;
 
-        // Conditional rendering based on redirectToLogin
         return (
             <div style={{
                 backgroundColor: 'aliceblue', display: 'flex', justifyContent: 'center',

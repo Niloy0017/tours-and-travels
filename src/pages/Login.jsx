@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Storagehandler from "../helper/Storagehandler";
 
-const Login = ({ formChange }) => {
+const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
@@ -28,9 +28,6 @@ const Login = ({ formChange }) => {
 
             Storagehandler.setLocalStorage(email);
 
-
-            // setEmail('');
-            // setPassword('');
         }
     }
 
@@ -58,9 +55,6 @@ const Login = ({ formChange }) => {
                 <button id="btn" style={{ backgroundColor: 'coral' }} type="button" onClick={formValue}>SUBMIT</button>
 
             </form>
-
-
-            {/* <button id="logbtn" style={{ backgroundColor: 'coral' }} onClick={formChange}>REGISTER</button> */}
 
         </div>
     )

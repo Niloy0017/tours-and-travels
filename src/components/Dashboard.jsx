@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import Storagehandler from "../helper/Storagehandler";
 
 const Dashboard = () => {
