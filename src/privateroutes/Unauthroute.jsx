@@ -8,6 +8,7 @@ export const Unauthroute = ({ children }) => {
 
     useEffect(() => {
         let user = Storagehandler.getLocalStorage();
+
         if (user) {
             navigate("/dashboard")
         }
@@ -17,3 +18,4 @@ export const Unauthroute = ({ children }) => {
         <div> {children} </div>
     )
 }
+

@@ -8,14 +8,16 @@ export const Authroute = ({ children }) => {
 
     useEffect(() => {
         let user = Storagehandler.getLocalStorage();
+
         if (!user) {
             navigate("/login")
         }
     })
 
     return (
-        <div>
-            {children}
-        </div>
+        <div>{children}</div>
     )
 }
+
+
+

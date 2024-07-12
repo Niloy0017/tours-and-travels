@@ -1,14 +1,18 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import { connect } from "react-redux";
+import { register } from "../redux/reduxslices/authslice";
+
 
 class Register extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
             firstname: '',
             lastname: '',
             email: '',
-            phone: '',
+            password: '',
             submitted: false
         };
     }
@@ -19,39 +23,52 @@ class Register extends Component {
         this.setState({ [name]: value });
     }
 
-    formValue = (event) => {
+    formOnSubmit = (event) => {
         event.preventDefault();
-        const { firstname, lastname, email, phone } = this.state;
+        const { firstname, lastname, email, password } = this.state;
 
-        if (email && phone && firstname && lastname) {
+        if (email && password && firstname && lastname) 
+        {
+            const newUser = {
+                firstName: firstname,
+                lastName: lastname,
+                password: password,
+                email: email,
+            }
+
+            this.props.register(newUser);
+
             console.log("register form values are:");
-            console.log("firstname: ", firstname, "lastname: ", lastname, "email : ", email, "phone : ", phone);
+            console.log("firstname: ", firstname, "lastname: ", lastname, "email : ", email, "password : ", password);
 
             // Reset form fields
             this.setState({
                 firstname: '',
                 lastname: '',
                 email: '',
-                phone: '',
+                password: '',
                 submitted: true
             });
         }
+
     }
 
     render() {
-        const { firstname, lastname, email, phone, submitted } = this.state;
+        const { firstname, lastname, email, password, submitted } = this.state;
 
         return (
             <div style={{
-                backgroundColor: 'aliceblue', display: 'flex', justifyContent: 'center',
+                display: 'flex', justifyContent: 'center',
                 alignItems: 'center', flexDirection: 'column', gap: '10px',
                 width: '100%', padding: '50px', height: '100%'
             }}>
+                { this.props.user && <Navigate to="/login"/> }
+
                 <form style={{
                     display: 'flex', flexDirection: 'column', gap: '10px',
                     justifyContent: 'center', alignItems: 'center', border: '3px solid black', padding: '50px'
                 }}>
-                    <div>All Students Table</div>
+                    <div>Registration Form</div>
 
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
                         <label htmlFor="firstnam">First Name</label>
@@ -72,12 +89,12 @@ class Register extends Component {
                     </div>
 
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
-                        <label htmlFor="phone">Phone</label>
-                        <input name="phone" id="phone" type="number" placeholder="enter your phone"
-                            value={phone} onChange={this.handleInputChange} />
+                        <label htmlFor="password">Password</label>
+                        <input name="password" id="password" type="number" placeholder="enter your phone"
+                            value={password} onChange={this.handleInputChange} />
                     </div>
 
-                    <button id="btn" style={{ backgroundColor: 'coral' }} onClick={this.formValue}>SUBMIT</button>
+                    <button id="btn" style={{ backgroundColor: 'coral' }} onClick={this.formOnSubmit}>SUBMIT</button>
 
                     {submitted && (
                         <div>
@@ -92,4 +109,14 @@ class Register extends Component {
     }
 }
 
-export default Register;
+const mapStateToProps = (state) => (
+    {
+        user: state.auth.user,
+    }
+)
+
+const mapDispatchToProps = { register };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Register);
+
+// export default Register;

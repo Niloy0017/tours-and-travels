@@ -1,11 +1,28 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import Storagehandler from "../helper/Storagehandler";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../redux/reduxslices/authslice";
+
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    const { uselessHandler } = useOutletContext();
+
+    const dispatch = useDispatch();
+    const isloginSelector = useSelector(state => state.auth.islogin);
+
+    useEffect(() => {
+        if (isloginSelector)
+        {
+            console.log("isloginSelector in if ", isloginSelector);
+            Storagehandler.setLocalStorage(email);
+            uselessHandler();
+            navigate('/tours');
+        }
+    }, [isloginSelector]);
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -18,21 +35,23 @@ const Login = () => {
         }
     }
 
-    const formValue = () => {
-        if (email && password) {
+    const formOnSubmit = (e) => {
+        e.preventDefault();
 
+        if (email && password) 
+        {
             console.log("login form values are:");
             console.log("email : ", email, "password : ", password);
 
-            navigate('/dashboard', { state: { email } });
+            const dispatcher = dispatch(login({ email, password }));
+            console.log("dispatcher ", dispatcher);
 
-            Storagehandler.setLocalStorage(email);
-
+            console.log("isloginSelector on formsubmit ", isloginSelector);
         }
     }
 
     return (
-        <div style={{ backgroundColor: 'aliceblue', gap: '10px' }}
+        <div style={{ gap: '10px' }}
             className="d-flex justify-content-center align-items-center flex-column p-5 w-100 h-100">
 
             <form style={{ border: '3px solid black', padding: '50px' }}
@@ -52,7 +71,7 @@ const Login = () => {
                         value={password} onChange={handleInputChange} />
                 </div>
 
-                <button id="btn" style={{ backgroundColor: 'coral' }} type="button" onClick={formValue}>SUBMIT</button>
+                <button id="btn" style={{ backgroundColor: 'coral' }} type="button" onClick={formOnSubmit}>SUBMIT</button>
 
             </form>
 
@@ -61,6 +80,4 @@ const Login = () => {
 }
 
 export default Login;
-
-
 
