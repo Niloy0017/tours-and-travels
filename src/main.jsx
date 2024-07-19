@@ -10,7 +10,7 @@ import reduxstore from './redux/reduxstore.js'
 ReactDOM.createRoot(document.getElementById('root')).render(
   // <React.StrictMode>
     <Provider store={reduxstore}>
-      <BrowserRouter>
+      <BrowserRouter basename='/tours-and-travels'>
         <App />
       </BrowserRouter>
     </Provider>
