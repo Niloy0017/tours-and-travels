@@ -28,3 +28,11 @@ export default Dashboard;
 
 
 
+// blocking - nonblocking code
+// base url - path till server ??
+// chaining
+// action creator , reducer , action , reducer function
+// controlled component
+
+
+
